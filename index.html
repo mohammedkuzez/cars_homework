@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body {
+            background-color: #eee;
+            padding: 20px;
+        }
+        .container {
+            padding: 10px;
+            display: flex;
+            gap: 10px;
+        }
+        .card {
+            background-color: white;
+            flex-grow: 1;
+            border-radius: 7px;
+            padding: 10px;
+            border: 2px solid transparent;
+        }
+        .container_input {
+            padding: 10px;
+        }
+        input {
+            width: 100%;
+            height: 30px;
+        }
+        .secand_card {
+            display: flex;
+            gap: 20px;
+        }
+        .mar_bo {
+            margin-bottom: 5px;
+        }
+        .border {
+            border: 2px solid #bab9b9;
+        }
+    </style>
+</head>
+<body>
+    <div class="container_input">
+        <input type="text" placeholder="Search for car">
+    </div>
+    <div id="container" class="container"></div>
+    <div id="clicked_card"></div>
+    <img src="" alt="" style="width: 20px;">
+    <script>
+        var cars = [
+            {
+                name: "volvo",
+                year: 2001,
+                model: "S80",
+                Kilometrage: "1523",
+                fixed: "yes",
+                Sprayed: "yes",
+                engin: "changed",
+                image: "./volvo.jpg",
+            },
+            {
+                name: "kia",
+                year: 2005,
+                model: "Spectra",
+                Kilometrage: "155",
+                fixed: "No",
+                Sprayed: "NO",
+                engin: "changed",
+                image: "./kia.jpeg",
+            },
+            {
+                name: "honda",
+                year: 2010,
+                model: "accord",
+                Kilometrage: "876",
+                fixed: "no",
+                Sprayed: "yes",
+                engin: "clear",
+                image: "./honda.jpeg"
+            },
+            {
+                name: "subaru",
+                year: 2007,
+                model: "impreza",
+                Kilometrage: "943",
+                fixed: "yes",
+                Sprayed: "No",
+                engin: "changed",
+                image: "./subaru.jpeg"
+            },
+            {
+                name: "BMW",
+                year: 2015,
+                model: "M3",
+                Kilometrage: "717",
+                fixed: "No",
+                Sprayed: "No",
+                engin: "clear",
+                image: "./bwm.png"
+            },
+            {
+                name: "mercedes",
+                year: 2007,
+                model: "mercedes-benz C-Class",
+                Kilometrage: "923",
+                fixed: "No",
+                Sprayed: "No",
+                engin: "clear",
+                image: "./mercedes.jpg"
+            },
+        ];
+        var input = document.querySelector("input[type='text']");
+        function renderCards(filter = "") {
+            document.getElementById("container").innerHTML = "";
+            cars.forEach((car, index) => {
+        if (car.name.toLowerCase().includes(filter.toLowerCase())) {
+            document.getElementById("container").innerHTML += `<div class="card" data-index="${index}">
+                <div>${car.name}</div>
+                <div>${car.model}</div>
+                <div>${car.year}</div>
+            </div>`;
+        }
+    });
+            document.querySelectorAll(".card").forEach((card,index) => {
+                card.addEventListener("click",function() {
+                    document.querySelectorAll(".card").forEach(c => c.classList.remove("border"));
+                    card.classList.add("border")
+                    var car = cars[index]
+                    document.getElementById("clicked_card").innerHTML =
+                    `<div class="secand_card">
+                        <img src="${car.image}" alt="" style="width: 500px; background-size: cover; background-position: center;">
+                        <div style="padding: 20px;">
+                            <div class="mar_bo">fixed: ${car.fixed}</div>
+                            <div class="mar_bo">Sprayed: ${car.Sprayed}</div>
+                            <div class="mar_bo">engin: ${car.engin}</div>
+                            <div class="mar_bo">Kilometrage: ${car.Kilometrage}</div>
+                        </div>
+                    </div>`;
+                })
+            })}
+            renderCards();
+            input.addEventListener("input", function() {
+                renderCards(input.value);
+                document.getElementById("clicked_card").innerHTML = "";
+            });
+    </script>
+</body>
+</html>
